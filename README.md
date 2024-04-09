@@ -1,2 +1,2 @@
 # Wechat_Launcher
-微信多开启动器
+微信启动器
