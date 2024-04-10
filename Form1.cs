@@ -56,9 +56,8 @@ namespace Wechart_LauncherGui
             else {
                 config.path = dialog.FileName;
             }
-            SaveConfig();
             label3.Text = config.path;
-
+            SaveConfig();
         }
         private void SaveConfig()
         {
@@ -68,25 +67,42 @@ namespace Wechart_LauncherGui
         private void button2_Click(object sender, EventArgs e)
         {
             this.textBox1.Text = config.size.ToString();
-
-            if (Util.CheckWechatPath(this.config.path)) {
+            if (!config.path.Equals("") && Util.CheckWechatPath(this.config.path))
+            {
                 Util.CloseOtherWeChatProgram();
-                for (int i = 0; i < config.size; i++) {
+                for (int i = 0; i < config.size; i++)
+                {
                     Util.RunWechat(config.path);
                 }
+            }
+            else {
+                MessageBox.Show("无效的微信程序路径,请手动指定程序");
             }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             int size;
-            if (!int.TryParse(this.textBox1.Text, out size) || size <= 0)
+            if (!int.TryParse(textBox1.Text, out size) || size <= 0)
             {
                 return;
             }
 
-            this.config.size = size;
+            config.size = size;
             SaveConfig();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            string path = Util.GetWechatPathFromReg();
+            if (path.Equals(""))
+            {
+                MessageBox.Show("无法找到微信目录,请手动指定");
+                return;
+            }
+            this.config.path = path;
+            this.label3.Text = this.config.path;
+            this.SaveConfig();
         }
     }
     public class Config {

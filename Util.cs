@@ -36,7 +36,7 @@ namespace Wechart_LauncherGui
             {
 
             }
-            return null;
+            return "";
         }
         public static void CloseOtherWeChatProgram() {
             foreach (var process in Process.GetProcessesByName("WeChat")) {
